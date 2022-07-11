@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: Banane
+    ports:
+      - "33069:3306"
+    volumes:
+      - ./var/db/data:/var/lib/mysql:rw
+    networks:
+      hex:
+
+  php:
+    container_name: php
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      hex:
+
+networks:
+  hex:
